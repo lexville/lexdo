@@ -11,8 +11,13 @@
         <link rel="stylesheet" href="/css/bootstrap-material-design.min.css">
         <link rel="stylesheet" href="/css/ripples.min.css">
         <link rel="stylesheet" href="/css/sweetalert.css" />
+        <link rel="stylesheet" href="/css/main.css" />
 </head>
-<body id="app-layout">
+<body id="app-layout"
+@if (Auth::guest())
+    class="background"
+@endif
+>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">

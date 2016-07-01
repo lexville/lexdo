@@ -1,7 +1,12 @@
-.article {
-    padding-bottom: 15px;
+.background {
+    background-image: url(/img/bgimage.jpg);
+    background-repeat:no-repeatdisplay: compact;
 }
-
-.user-info {
-    color: rgba(0, 0, 0, 0.51);
+.home {
+    color: white;
+}
+.home-info {
+    font-family: cursive;
+    font-size: 100px;
+    margin-top: 5%;
 }
