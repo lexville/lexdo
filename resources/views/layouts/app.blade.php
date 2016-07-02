@@ -68,6 +68,10 @@
     <script src="/js/sweetalert.min.js"></script>
     <script src="/js/ripples.min.js"></script>
     <script src="/js/material.min.js"></script>
+    <script type="text/javascript">
+        var token = "{{ csrf_token() }}";
+        var url = "{{ route('tasks.index') }}"
+    </script>
     <script src="/js/app.js"></script>
 </body>
 </html>

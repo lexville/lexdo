@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Task;
+use Auth;
 
 class TasksController extends Controller
 {
@@ -16,18 +17,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::paginate(6);
+        $tasks = Task::personalize()->orderBy('id', 'desc')->paginate(6);;
         return view('tasks.index',['tasks' => $tasks]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -38,18 +29,18 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, [
+            'task' => 'required|max:50',
+            'description' => 'required|max:1000',
+        ]);
+        $task = new Task();
+        $task->description = $request->input('description');
+        $task->task = $request->input('task');
+        // $task->user_id = auth()->user()->id;
+        // dd($task);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $request->user()->tasks()->save($task);
+        return response()->json($task);
     }
 
     /**
@@ -72,7 +63,15 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'task' => 'required|max:50',
+            'description' => 'required|max:1000',
+        ]);
+
+        $updateTask = Task::findOrFail($id);
+        $updateTask->task = $request['task'];
+        $updateTask->description = $request['description'];
+        $updateTask->update();
     }
 
     /**
@@ -83,6 +82,27 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
+        $this->findById($id)->delete();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
         //
+    }
+
+    /**
+     * Get video based on the id.
+     *
+     * @return video by id
+     */
+    private function findById($id)
+    {
+        return Task::findOrFail($id);
     }
 }

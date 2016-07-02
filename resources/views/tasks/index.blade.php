@@ -5,10 +5,12 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <!-- Table-to-load-the-data Part -->
+            <h2>Laravel Ajax ToDo App</h2>
+            <button id="btn-add" name="btn-add" class="btn btn-raised btn-primary btn-xs">Add New Task</button>
+            <div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Task</th>
                         <th>Description</th>
                         <th>Date Created</th>
@@ -18,12 +20,11 @@
                 <tbody id="tasks-list" name="tasks-list">
                     @foreach ($tasks as $task)
                     <tr id="task{{$task->id}}">
-                        <td>{{$task->id}}</td>
                         <td>{{$task->task}}</td>
                         <td>{{$task->description}}</td>
-                        <td>{{$task->created_at}}</td>
+                        <td>{{$task->created_at->diffForHumans()}}</td>
                         <td>
-                            <button class="btn btn-warning btn-xs btn-detail open-modal" value="{{$task->id}}">Edit</button>
+                            <button class="btn btn-warning btn-xs btn-detail open-modal task-edit" data-id="{{ $task->id }}" value="{{$task->id}}">Edit</button>
                             <button class="btn btn-danger btn-xs btn-delete delete-task" value="{{$task->id}}">Delete</button>
                         </td>
                     </tr>
